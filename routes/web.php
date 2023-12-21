@@ -22,15 +22,9 @@ Route::get('/', [ListingController::class, 'index']);
 
 Route::get('/signup', [UserController::class, 'signup'])->middleware('guest');
 
-Route::post('/users', [UserController::class, 'store']);
-
 Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
 
-Route::post('/users/login', [UserController::class, 'authenticate']);
-
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
-
-
 
 
 // Common Resource Routes:
