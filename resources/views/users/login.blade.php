@@ -38,7 +38,7 @@
         <div class="mt-6">
           <p>
             Don't have an account?
-            <a href="/register" class="text-laravel">Register</a>
+            <a href="/signup" class="text-laravel">Register</a>
           </p>
         </div>
       </form>
