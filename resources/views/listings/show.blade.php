@@ -36,7 +36,7 @@
         </div>
       </x-card>
       <x-card>
-        <a href="/listings/{{$listing->id}}/edit}">
+        <a href="/listings/edit/{{$listing->id}}}">
             <i class="fa-solid fa-pencil"></i> Edit
         </a>
         <form method="POST" action="/listings/{{$listing->id}}">

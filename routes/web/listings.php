@@ -10,7 +10,7 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/listings/manage', [ListingController::class, 'manage']);
 
-    Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+    Route::get('/listings/edit/{listing}', [ListingController::class, 'edit']);
 
     Route::put('/listings/{listing}', [ListingController::class, 'update']);
 
