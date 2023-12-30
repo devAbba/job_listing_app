@@ -12,11 +12,12 @@ class ListingController extends Controller
     /**
      * function to show all listings
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        $page_size = $request->query('page_size') ?? 6;
         return view('listings.index', [
             'heading' => 'Latest Listings',
-            'listings' => Listing::latest()->filter(request(['tag']))->paginate(4)
+            'listings' => Listing::latest()->filter(request(['tag']))->paginate($page_size)
         ]);
     }
 
