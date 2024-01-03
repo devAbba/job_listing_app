@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCreated;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -30,6 +31,12 @@ class UserController extends Controller
 
         // create user
         $user = User::create($form_fields);
+        if (!$user) {
+            abort(500, "Something went wrong");
+        }
+
+        //fire userCreated event
+        event(new UserCreated($user));
 
         // login
         auth()->login($user);
