@@ -22,6 +22,6 @@ class SendVerificationMail
     public function handle(object $event): void
     {
         // send verification mail when new user is created
-        Mail::to($event->user)->send(new \App\Mail\VerificationMail($event->user));
+        Mail::to($event->user)->queue(new \App\Mail\VerificationMail($event->user));
     }
 }
