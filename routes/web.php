@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ListingController;
+use Illuminate\Mail\Markdown;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,12 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+if (\Illuminate\Support\Facades\App::environment('local')){
+    Route::get('/playground', function (){
+        $user = \App\Models\User::factory()->make();
+        return (new \App\Mail\VerificationMail($user))->render();
+    });
+}
 
 // Common Resource Routes:
 // index - show all listings
