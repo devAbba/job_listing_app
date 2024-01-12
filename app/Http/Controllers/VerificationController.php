@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VerifiedUser;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,7 @@ class VerificationController extends Controller
     {
         $request->fulfill();
 
+        event(new VerifiedUser(auth()->user()));
         return redirect('/')->with('success', "Email Verified");
     }
 
