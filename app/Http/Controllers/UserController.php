@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UserCreated;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Auth\Events\Registered;
 
 
 class UserController extends Controller
@@ -35,8 +35,8 @@ class UserController extends Controller
             abort(500, "Something went wrong");
         }
 
-        //fire userCreated event
-        event(new UserCreated($user));
+        //fire user registration event
+        event (new Registered($user));
 
         // login
         auth()->login($user);
