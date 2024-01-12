@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Auth\Events\Registered;
 
 
 class UserController extends Controller
@@ -30,6 +31,12 @@ class UserController extends Controller
 
         // create user
         $user = User::create($form_fields);
+        if (!$user) {
+            abort(500, "Something went wrong");
+        }
+
+        //fire user registration event
+        event (new Registered($user));
 
         // login
         auth()->login($user);
