@@ -36,7 +36,7 @@ class VerificationController extends Controller
      * Resend verification email
      *
      * @param \Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function sendMail(Request $request)
     {
