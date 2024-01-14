@@ -5,7 +5,7 @@
         <p class="mb-4">Log into your account to post gigs</p>
       </header>
 
-      <form method="POST" action="/users/login">
+      <form method="POST" action="/login">
         @csrf
 
         <div class="mb-6">
@@ -34,7 +34,7 @@
             Sign In
           </button>
         </div>
-        <a href="/forgotpassword" class="text-blue-500 hover:text-blue-700">Forgot password?</a>
+        <a href="/forgot-password" class="text-blue-500 hover:text-blue-700">Forgot password?</a>
         <div class="mt-6">
           <p>
             Don't have an account?
