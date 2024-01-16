@@ -14,6 +14,7 @@
               extend: {
                 colors: {
                   laravel: '#ef3b2d',
+                  primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
                 },
               },
             },
@@ -21,47 +22,17 @@
     </script>
 </head>
 <body class="mb-48">
-    <nav class="flex justify-between items-center mb-4">
-      <a href="/"><img class="w-24" src="{{asset('images/logo.png')}}" alt="" class="logo" /></a>
-      <ul class="flex space-x-6 mr-6 text-lg">
-        @auth
-        <li>
-          <span class="font-bold uppercase">
-            Welcome {{auth()->user()->name}}
-          </span>
-        </li>
-        <li>
-          <a href="/listings/manage" class="hover:text-laravel"><i class="fa-solid fa-gear"></i> Manage Listings</a>
-        </li>
-        <li>
-          <form class="inline" method="POST" action="/logout">
-            @csrf
-            <button type="submit">
-              <i class="fa-solid fa-door-closed"></i> Logout
-            </button>
-          </form>
-        </li>
-        @else
-        <li>
-          <a href="/signup" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register</a>
-        </li>
-        <li>
-          <a href="/login" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
-        </li>
-        @endauth
-      </ul>
-    </nav>
-
     <main>
       {{$slot}}
     </main>
-    <footer
-      class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-laravel text-white h-24 mt-24 opacity-90 md:justify-center">
-      <p class="ml-2">Copyright &copy; 2022, All Rights reserved</p>
 
-      <a href="/listings/create" class="absolute top-1/3 right-10 bg-black text-white py-2 px-5">Post Job</a>
+    <footer class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-laravel text-white h-24 mt-24 opacity-90 md:justify-center">
+      <p class="ml-2">Copyright &copy; 2022, All Rights reserved</p>
+      @if (Auth::check())
+        <a href="/listings/create" class="absolute top-1/3 right-10 bg-black text-white py-2 px-5">Post Job</a>
+      @endif
     </footer>
 
-    <x-flash-message />
+    <x-flash-message/>
   </body>
 </html>
