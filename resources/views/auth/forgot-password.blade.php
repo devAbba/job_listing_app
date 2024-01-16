@@ -1,9 +1,11 @@
 <x-layout>
+    <x-flash-message/>
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
             <h2 class="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Forgot Password
             </h2>
+            <p class="block mb-2 mt-2 text-sm font-medium text-gray-500 dark:text-white">Enter your email address and we will send you a reset link</p>
             <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="/forgot-password" method="POST">
                 @csrf
                 <div>
