@@ -5,12 +5,12 @@
         <p class="mb-4">Log into your account to post gigs</p>
       </header>
 
-      <form method="POST" action="/users/login">
+      <form method="POST" action="/login">
         @csrf
 
         <div class="mb-6">
-          <label for="email" class="inline-block text-lg mb-2">Email</label>
-          <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email" value="{{old('email')}}" />
+          <label for="email" class="block mb-2 font-medium text-gray-700 dark:text-white">Email</label>
+          <input type="email" class="border border-gray-200 rounded-lg p-2 w-full" name="email" value="{{old('email')}}" />
 
           @error('email')
           <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -18,10 +18,10 @@
         </div>
 
         <div class="mb-6">
-          <label for="password" class="inline-block text-lg mb-2">
+          <label for="password" class="block mb-2 font-medium text-gray-700 dark:text-white">
             Password
           </label>
-          <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password"
+          <input type="password" class="border border-gray-200 rounded-lg p-2 w-full" name="password"
             value="{{old('password')}}" />
 
           @error('password')
@@ -29,16 +29,17 @@
           @enderror
         </div>
 
-        <div class="mb-4">
-          <button type="submit" class="bg-blue-500 text-white rounded py-2 px-4 hover:bg-green-700">
+        <div class="mb-4 flex">
+          <button type="submit" class="mr-auto bg-primary-500 text-white rounded-lg py-2 px-4 hover:bg-primary-700">
             Sign In
           </button>
+          <a href="/forgot-password" class="text-primary-500 hover:text-primary-700">Forgot password?</a>
         </div>
-        <a href="/forgotpassword" class="text-blue-500 hover:text-blue-700">Forgot password?</a>
-        <div class="mt-6">
+
+        <div class="mt-8">
           <p>
             Don't have an account?
-            <a href="/signup" class="text-laravel">Register</a>
+            <a href="/signup" class="text-primary-500 hover:text-primary-700">Register</a>
           </p>
         </div>
       </form>
