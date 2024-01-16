@@ -36,7 +36,7 @@ class UserController extends Controller
         $form_fields = $request->validate([
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => ['required', 'confirmed', 'min:6']
+            'password' => ['required', 'confirmed', 'min:8']
         ]);
 
         // hash password
@@ -130,7 +130,7 @@ class UserController extends Controller
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
+            ? back()->with(['success' => __($status)])
             : back()->withErrors(['email' => __($status)]);
     }
 
@@ -173,7 +173,7 @@ class UserController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
+            ? redirect()->route('login')->with('success', __($status))
             : back()->withErrors(['email' => [__($status)]]);
     }
 

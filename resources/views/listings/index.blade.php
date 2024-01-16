@@ -1,4 +1,6 @@
 <x-layout>
+    @include('partials._navbar')
+
     @if (!Auth::check())
         @include('partials._hero')
     @endif
