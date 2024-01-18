@@ -36,8 +36,6 @@
           <a href="/forgot-password" class="text-primary-500 hover:text-primary-700">Forgot password?</a>
         </div>
 
-        <div class="mt-8">
-        <a href="/forgot-password" class="text-blue-500 hover:text-blue-700">Forgot password?</a>
         <div class="mt-6">
           <p>
             Don't have an account?
