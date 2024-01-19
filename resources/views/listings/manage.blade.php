@@ -15,7 +15,7 @@
               <a href="/listings/{{$listing->id}}"> {{$listing->title}} </a>
             </td>
             <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-              <a href="/listings/{{$listing->id}}/edit" class="text-blue-400 px-6 py-2 rounded-xl"><i
+              <a href="/listings/edit/{{$listing->id}}" class="text-blue-400 px-6 py-2 rounded-xl"><i
                   class="fa-solid fa-pen-to-square"></i>
                 Edit</a>
             </td>
@@ -23,7 +23,11 @@
               <form method="POST" action="/listings/{{$listing->id}}">
                 @csrf
                 @method('DELETE')
-                <button class="text-red-500"><i class="fa-solid fa-trash"></i> Delete</button>
+                <div x-data="{ open: false }">
+                    <button @click="open = ! open" type="button" class="text-red-500">
+                        <i class="fa-solid fa-trash"></i> Delete</button>
+                    <x-confirm heading="Delete listing?" description="Are you sure you want to delete this listing? This action cannot be undone."/>
+                </div>
               </form>
             </td>
           </tr>
