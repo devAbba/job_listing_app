@@ -16,5 +16,5 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
 
-    Route::get('/listings/{listing}', [ListingController::class, 'show'])->withoutMiddleware('auth');
+    Route::get('/listings/{listing}', [ListingController::class, 'show'])->withoutMiddleware(['auth', 'verified']);
 });
