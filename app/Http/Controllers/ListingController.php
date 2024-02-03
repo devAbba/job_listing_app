@@ -78,9 +78,8 @@ class ListingController extends Controller
     // update listing
     public function update(Request $request, Listing $listing)
     {
-        if($listing->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized Action');
-        }
+
+        $this->authorize('update', $listing);
 
         $form_fields = $request->validate([
             'title' => 'required',
@@ -108,9 +107,7 @@ class ListingController extends Controller
     // delete listing
     public function destroy(Listing $listing)
     {
-        if($listing->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized Action');
-        }
+        $this->authorize('delete', $listing);
 
         $listing->delete();
 
