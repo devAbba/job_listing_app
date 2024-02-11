@@ -45,7 +45,7 @@ class ListingPolicy
      */
     public function destroy(User $user, Listing $listing): bool
     {
-        return ($user->is_admin || $listing->user_id === $user->id);
+        return $listing->user_id === $user->id || $user->role === 'admin';
     }
 
 }
