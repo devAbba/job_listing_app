@@ -84,7 +84,20 @@ class UserController extends Controller
         if (auth()->attempt($form_fields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with('success', "logged in successfully");
+            switch(auth()->user()->role) {
+                case 'admin':
+                    return redirect('/admin')->with('success', "logged in successfully");
+                    break;
+                case 'user':
+                    return redirect('/')->with('success', "logged in successfully");
+                    break;
+                default:
+                    auth()->logout();
+                    return redirect('/login')->with('error', "unexpected error");
+
+            }
+
+            // return redirect('/')->with('success', "logged in successfully");
         }
 
         return back()->withErrors(['email' => "invalid credentials"])->onlyInput('email');
