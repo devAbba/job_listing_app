@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ListingController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,12 +21,25 @@ use App\Http\Controllers\ListingController;
 
 Route::get('/', [ListingController::class, 'index']);
 
-Route::get('/signup', [UserController::class, 'signup'])->middleware('guest');
+Route::middleware('guest')->group(function() {
+    Route::get('/signup', [UserController::class, 'signup']);
 
-Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
+    Route::post('/signup', [UserController::class, 'store']);
+
+    Route::get('/login', [UserController::class, 'login'])->name('login');
+
+    Route::post('/login', [UserController::class, 'authenticate']);
+});
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+
+if (\Illuminate\Support\Facades\App::environment('local')){
+    Route::get('/playground', function (){
+        $user = \App\Models\User::factory()->make();
+        return (new \App\Mail\WelcomeMail($user))->render();
+    });
+}
 
 // Common Resource Routes:
 // index - show all listings

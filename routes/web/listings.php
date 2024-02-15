@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ListingController;
 
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/listings/create', [ListingController::class, 'create']);
 
     Route::post('/listings', [ListingController::class, 'store']);
@@ -16,5 +16,5 @@ Route::middleware('auth')->group(function() {
 
     Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
 
-    Route::get('/listings/{listing}', [ListingController::class, 'show'])->withoutMiddleware('auth');
+    Route::get('/listings/{listing}', [ListingController::class, 'show'])->withoutMiddleware(['auth', 'verified']);
 });
