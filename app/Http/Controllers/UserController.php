@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -83,7 +84,20 @@ class UserController extends Controller
         if (auth()->attempt($form_fields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with('success', "logged in successfully");
+            switch(auth()->user()->role) {
+                case 'admin':
+                    return redirect('/admin')->with('success', "logged in successfully");
+                    break;
+                case 'user':
+                    return redirect('/')->with('success', "logged in successfully");
+                    break;
+                default:
+                    auth()->logout();
+                    return redirect('/login')->with('error', "unexpected error");
+
+            }
+
+            // return redirect('/')->with('success', "logged in successfully");
         }
 
         return back()->withErrors(['email' => "invalid credentials"])->onlyInput('email');
@@ -167,6 +181,8 @@ class UserController extends Controller
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();
+
+                Auth::logoutOtherDevices($password);
 
                 event(new PasswordReset($user));
             }
