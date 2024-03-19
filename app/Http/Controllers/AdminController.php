@@ -6,30 +6,33 @@ use App\Models\User;
 use App\Models\Listing;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
-    public function index(User $user): View
+    public function index(Request $request): View
     {
         Gate::authorize('admin');
 
-        return view('admin.dashboard');
+        $listings = Listing::latest()->filter(request(['tag', 'search']))->paginate(6);
+
+        return view('admin.dashboard',
+            [
+                'listings' => $listings,
+                'total_count' => Listing::count(),
+                'total_users' => User::count()
+            ]
+        );
     }
 
-    public function users(Request $request)
+    public function users(): View
     {
         Gate::authorize('admin');
 
-        $page_size = $request->query('page_size') ?? 10;
-        return view('admin.users', ['users' => User::query()->paginate($page_size)]);
+        $users = DB::table('users')->get();
+
+        return view('admin.users', ['users' => $users]);
     }
 
-    public function listings(Request $request)
-    {
-        Gate::authorize('admin');
-
-        $page_size = $request->query('page_size') ?? 10;
-        return view('admin.listings', ['listings' => Listing::latest()->filter(request(['tag']))->paginate($page_size)]);
-    }
 }
