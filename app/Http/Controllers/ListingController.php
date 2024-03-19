@@ -26,6 +26,9 @@ class ListingController extends Controller
      */
     public function show(Listing $listing): View
     {
+        $listing->views++;
+        $listing->save();
+
         return view('listings.show', [
             'listing' => $listing
         ]);
@@ -107,17 +110,17 @@ class ListingController extends Controller
     // delete listing
     public function destroy(Listing $listing)
     {
-        $this->authorize('delete', $listing);
+        $this->authorize('destroy', $listing);
 
         $listing->delete();
 
-        return redirect('/')->with('success', "Listing deleted successfully");
+        return back()->with('success', "Listing deleted successfully");
     }
 
     // manage listing
     public function manage()
     {
-        return view('listings.manage', [
+        return view('users.dashboard', [
             'listings' => auth()->user()->listings()->get()
         ]);
     }
