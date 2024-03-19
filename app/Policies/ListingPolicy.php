@@ -37,7 +37,7 @@ class ListingPolicy
      */
     public function update(User $user, Listing $listing): bool
     {
-        return $listing->user_id === $user->id;
+        return ($listing->user_id === $user->id || $user->role === 'admin');
     }
 
     /**
