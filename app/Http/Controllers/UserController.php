@@ -86,10 +86,10 @@ class UserController extends Controller
 
             switch(auth()->user()->role) {
                 case 'admin':
-                    return redirect('/admin')->with('success', "logged in successfully");
+                    return redirect('/admin/dashboard')->with('success', "logged in successfully");
                     break;
                 case 'user':
-                    return redirect('/')->with('success', "logged in successfully");
+                    return redirect('/user/dashboard')->with('success', "logged in successfully");
                     break;
                 default:
                     auth()->logout();
@@ -97,7 +97,6 @@ class UserController extends Controller
 
             }
 
-            // return redirect('/')->with('success', "logged in successfully");
         }
 
         return back()->withErrors(['email' => "invalid credentials"])->onlyInput('email');
