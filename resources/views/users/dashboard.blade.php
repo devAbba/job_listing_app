@@ -1,6 +1,6 @@
 <x-layout>
-    <x-topbar/>
-    <div class="md:flex bg-gray-100 min-h-screen overflow-y-auto relative">
+    <x-navbar/>
+    <div class="lg:flex bg-gray-100 min-h-screen overflow-y-auto">
         <x-sidemenu/>
         <div class="p-2 lg:p-6 mb-24 flex-1 h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hidden">
             <main>
@@ -25,7 +25,7 @@
                             <div class="space-y-2">
                                 <p class="text-xs text-gray-400 uppercase">Users</p>
                                 <div class="flex items-center space-x-2">
-                                    <h1 class="text-xl font-semibold">{{$total_users}}</h1>
+                                    <h1 class="text-xl font-semibold">819</h1>
                                     <p class="text-xs bg-green-50 text-green-500 px-1 rounded">+7.4</p>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="space-y-2">
                                 <p class="text-xs text-gray-400 uppercase">Job Listings</p>
                                 <div class="flex items-center space-x-2">
-                                    <h1 class="text-xl font-semibold">{{$total_count}}</h1>
+                                    <h1 class="text-xl font-semibold">243</h1>
                                     <p class="text-xs bg-green-50 text-green-500 px-1 rounded">+3.1</p>
                                 </div>
                             </div>
@@ -48,8 +48,7 @@
                         <table class="min-w-max w-full table-auto">
                             <thead>
                                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Job listing</th>
-                                    <th class="py-3 px-6 text-left">Publisher</th>
+                                    <th class="py-3 px-6 text-left">listing</th>
                                     <th class="py-3 px-6 text-center">Views</th>
                                     <th class="py-3 px-6 text-center">Status</th>
                                     <th class="py-3 px-6 text-center">Actions</th>
@@ -62,14 +61,14 @@
                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                             {{$listing->title}}
                                     </td>
-                                    <td class="py-3 px-6 text-left">
+                                    {{-- <td class="py-3 px-6 text-left">
                                         <div class="flex items-center">
                                             <div class="mr-2">
                                                 <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"/>
                                             </div>
                                             <span>{{$listing->author}}</span>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td class="py-3 px-6 text-center">
                                         {{$listing->views}}
                                     </td>
@@ -85,9 +84,9 @@
                                                 </svg></a>
                                             </div>
                                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer cursor-pointer">
-                                                <a href="/listings/edit/{{$listing->id}}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                </svg></a>
+                                                </svg>
                                             </div>
                                             <form method="POST" action="/listings/{{$listing->id}}">
                                                 @csrf
@@ -123,3 +122,4 @@
         </div>
     </div>
 </x-layout>
+

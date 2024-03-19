@@ -1,5 +1,5 @@
 @if(session()->has('success'))
-<div class="fixed top-5 right-5 w-64" x-data="{show: true}" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition:enter="transition-opacity ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+<div class="fixed z-50 top-5 right-5 w-64" x-data="{show: true}" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition:enter="transition-opacity ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
     <div class="flex items-center p-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-900" role="alert">
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="green" class="h-6 w-6">
