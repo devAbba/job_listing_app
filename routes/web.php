@@ -34,6 +34,8 @@ Route::middleware('guest')->group(function() {
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+Route::get('/user/dashboard', [ListingController::class, 'manage'])->middleware(['auth', 'verified']);
+
 
 if (\Illuminate\Support\Facades\App::environment('local')){
     Route::get('/playground', function (){
