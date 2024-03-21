@@ -47,6 +47,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password' => 'hashed',
     ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        if($filters['search'] ?? false) {
+            $query->where('name', 'like', '%' . request('search') . '%')
+            ->orWhere('email', 'like', '%' . request('search') . '%');
+        }
+    }
+
     // Relationship With Listings
     public function listings(): HasMany
     {
