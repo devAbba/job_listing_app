@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Listing;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
@@ -26,11 +25,12 @@ class AdminController extends Controller
         );
     }
 
-    public function users(): View
+    public function users(Request $request): View
     {
         Gate::authorize('admin');
 
-        $users = DB::table('users')->get();
+        $page_size = $request->query('page_size') ?? 6;
+        $users = User::latest()->filter(request(['search']))->paginate($page_size);
 
         return view('admin.users', ['users' => $users]);
     }
