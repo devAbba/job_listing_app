@@ -30,7 +30,7 @@ class AdminController extends Controller
         Gate::authorize('admin');
 
         $page_size = $request->query('page_size') ?? 6;
-        $users = User::latest()->filter(request(['search']))->paginate($page_size);
+        $users = User::filter(request(['search']))->paginate($page_size);
 
         return view('admin.users', ['users' => $users]);
     }
