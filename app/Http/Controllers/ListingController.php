@@ -17,7 +17,7 @@ class ListingController extends Controller
         $page_size = $request->query('page_size') ?? 6;
         return view('listings.index', [
             'heading' => 'Latest Listings',
-            'listings' => Listing::latest()->filter(request(['tag']))->paginate($page_size)
+            'listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate($page_size)
         ]);
     }
 
