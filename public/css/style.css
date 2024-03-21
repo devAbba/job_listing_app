@@ -1,0 +1,7 @@
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-link.active {
+    background-color: #f3f4f6;
+}
