@@ -1,5 +1,5 @@
 <x-layout>
-    @include('partials._navbar')
+    @include('partials._header')
     <x-card class="p-10 max-w-lg mx-auto mt-24">
 
         <div class="w-14 mb-2 mx-auto"><img src="{{asset('/images/mail2.png')}}"></div>
