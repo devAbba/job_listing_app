@@ -1,9 +1,9 @@
 <x-layout>
     <x-topbar/>
-    <div class="md:flex bg-gray-100 min-h-screen overflow-y-auto relative">
+    <div class="md:flex h-full md:h-[calc(100vh-3rem)] bg-gray-100 mt-12">
         <x-sidemenu/>
-        <div class="p-2 lg:p-6 mb-24 flex-1 h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hidden">
-            <main>
+        <div class="flex-1 overflow-y-auto h-[calc(100vh-3rem)]">
+            <main class="p-2 lg:p-6 h-[calc(100vh-4rem)]">
                 <section class="max-w-7xl mx-auto py-4 px-5">
                     <div class="flex justify-between items-center border-b border-gray-300">
                         <h1 class="text-2xl font-semibold pt-2 pb-2">Dashboard</h1>
@@ -44,6 +44,8 @@
                         </div>
                     </div>
 
+                    <!-- listings table -->
+                    <x-search action="/admin/dashboard" class="w-80 mt-6"/>
                     <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
                         <table class="min-w-max w-full table-auto">
                             <thead>
@@ -100,7 +102,7 @@
                                                             </svg>
                                                         </div>
                                                     </button>
-                                                    <x-confirm heading="Delete listing?" description="Are you sure you want to delete this listing? This action cannot be undone."/>
+                                                    <x-confirm-modal heading="Delete listing?" description="Are you sure you want to delete this listing? This action cannot be undone."/>
                                                 </div>
                                             </form>
                                         </div>
@@ -120,6 +122,8 @@
                     <div class="mt-4 py-4">{{$listings->links()}}</div>
                 </section>
             </main>
+            <hr/>
+            <x-footer/>
         </div>
     </div>
 </x-layout>
