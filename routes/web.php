@@ -36,6 +36,7 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 Route::get('/user/dashboard', [ListingController::class, 'manage'])->middleware(['auth', 'verified']);
 
+Route::post('/role/toggle/{user_id}', [AdminController::class, 'toggleRole'])->middleware(['auth', 'verified']);
 
 if (\Illuminate\Support\Facades\App::environment('local')){
     Route::get('/playground', function (){
