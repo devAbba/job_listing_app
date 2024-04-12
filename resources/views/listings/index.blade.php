@@ -34,6 +34,6 @@
 
     </div>
     <div class="mt-6 mb-24 p-4">
-        {{$listings}}
+        {{$listings->links()}}
     </div>
 </x-layout>
