@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -53,9 +54,9 @@ class UserController extends Controller
         event (new Registered($user));
 
         // login
-        auth()->login($user);
+        // auth()->login($user);
 
-        return redirect('/')->with('success', "user created and logged in");
+        // return redirect('/')->with('success', "user created and logged in");
     }
 
     /**
@@ -143,7 +144,7 @@ class UserController extends Controller
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['success' => __($status)])
+            ? back()->with(['status' => __($status)])
             : back()->withErrors(['email' => __($status)]);
     }
 
@@ -188,8 +189,16 @@ class UserController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('success', __($status))
+            ? redirect()->route('login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);
-    }
+        }
 
+    public function destroy(User $user)
+    {
+        Gate::authorize('is_mod');
+
+        $res = $user->delete();
+
+        return back()->with('success', "User account deleted!");
+    }
 }
