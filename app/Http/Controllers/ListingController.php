@@ -104,7 +104,7 @@ class ListingController extends Controller
 
         $listing->update($form_fields);
 
-        return back()->with('success', "Job listing updated successfully!");
+        return redirect('/')->with('success', "Job listing updated successfully!");
     }
 
     // delete listing
