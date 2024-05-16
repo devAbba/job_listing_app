@@ -12,9 +12,10 @@ class AdminController extends Controller
 {
     public function index(Request $request): View
     {
-        Gate::authorize('admin');
+        Gate::authorize('is_admin');
 
-        $listings = Listing::latest()->filter(request(['tag', 'search']))->paginate(6);
+        $page_size = $request->query('page_size') ?? 5;
+        $listings = Listing::latest()->filter(request(['tag', 'search']))->paginate($page_size);
 
         return view('admin.dashboard',
             [
@@ -27,12 +28,26 @@ class AdminController extends Controller
 
     public function users(Request $request): View
     {
-        Gate::authorize('admin');
+        Gate::authorize('is_admin');
 
-        $page_size = $request->query('page_size') ?? 6;
+        $page_size = $request->query('page_size') ?? 5;
         $users = User::filter(request(['search']))->paginate($page_size);
 
         return view('admin.users', ['users' => $users]);
+    }
+
+    public function toggleRole(Request $request, $user_id)
+    {
+
+        Gate::authorize('is_mod');
+
+        $user = User::findOrFail($user_id);
+
+        $user->role = $user->role === 'admin' ? 'user' : 'admin';
+        $user->save();
+
+        return response()->json(['message' => 'user role toggled successfully'], 200);
+
     }
 
 }
