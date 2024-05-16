@@ -1,9 +1,22 @@
+<style>
+    /* CHECKBOX TOGGLE SWITCH */
+    /* @apply rules for documentation, these do not work as inline style */
+    .toggle-checkbox:checked {
+      @apply: border-green-400;
+      border-color: #68D391;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      @apply: bg-green-400;
+      background-color: #68D391;
+    }
+</style>
+
 <x-layout>
     <x-topbar/>
     <div class="md:flex h-full md:h-[calc(100vh-3rem)] bg-gray-100 mt-12">
         <x-sidemenu/>
-        <div class="flex-1 overflow-y-auto h-[calc(100vh-3rem)]">
-            <main class="p-2 lg:p-6 h-[calc(100vh-4rem)]">
+        <div class="flex-1 overflow-y-auto h-full md:h-[calc(100vh-3rem)]">
+            <main class="p-2 lg:p-6 min-h-[calc(100vh-8rem)]">
                 <section class="max-w-7xl mx-auto py-4 px-5">
                     <div class="flex justify-between items-center border-b border-gray-300">
                         <h1 class="text-2xl font-semibold pt-2 pb-2">Manage Accounts</h1>
@@ -15,10 +28,10 @@
                         <table class="min-w-max w-full table-auto">
                             <thead>
                                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Job listing</th>
-                                    <th class="py-3 px-6 text-left">Publisher</th>
-                                    <th class="py-3 px-6 text-center">Views</th>
-                                    <th class="py-3 px-6 text-center">Status</th>
+                                    <th class="py-3 px-6 text-left">Account Name</th>
+                                    <th class="py-3 px-6 text-left">Email</th>
+                                    <th class="py-3 px-6 text-center">Joined</th>
+                                    <th class="py-3 px-6 text-center">Toggle Role</th>
                                     <th class="py-3 px-6 text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -30,18 +43,17 @@
                                             {{$user->name}}
                                     </td>
                                     <td class="py-3 px-6 text-left">
-                                        <div class="flex items-center">
-                                            <div class="mr-2">
-                                                <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"/>
-                                            </div>
-                                            <span></span>
-                                        </div>
+                                        {{$user->email}}
                                     </td>
-                                    <td class="py-3 px-6 text-center">
+                                    <td class="py-3 px-6 text-center date-time">
 
                                     </td>
-                                    <td class="py-3 px-6 text-center">
-                                        <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Active</span>
+                                    <td class="py-3 px-6 text-center capitalize">
+                                        <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                            <input type="checkbox" name="toggle" id="toggle-{{$user->id}}" onchange="toggleAdmin()" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer checked:right-0" {{$user->role == 'admin' ? 'checked' : ''}}/>
+                                            <label for="toggle-{{$user->id}}" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                        </div>
+                                        <span class="text-xs text-gray-700">Admin</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex item-center justify-center">
@@ -51,12 +63,8 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                 </svg></a>
                                             </div>
-                                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 cursor-pointer cursor-pointer">
-                                                <a href="/listings/edit/{{$user->id}}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                </svg></a>
-                                            </div>
-                                            <form method="POST" action="/listings/{{$user->id}}">
+
+                                            <form method="POST" action="/account/{{$user->id}}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div x-data="{ open: false }">
@@ -67,7 +75,7 @@
                                                             </svg>
                                                         </div>
                                                     </button>
-                                                    <x-confirm-modal heading="Delete listing?" description="Are you sure you want to delete this listing? This action cannot be undone."/>
+                                                    <x-confirm-modal heading="Delete user account?" description="Are you sure you want to delete this user? This action cannot be undone."/>
                                                 </div>
                                             </form>
                                         </div>
@@ -93,4 +101,59 @@
     </div>
 </x-layout>
 
+<script>
+
+    const dt = luxon.DateTime;
+
+    const dateDivs = document.querySelectorAll('.date-time');
+
+    dateDivs.forEach((dateDiv, index) => {
+        const dateTime ="{{$user->created_at}}";
+
+        //properly format before parsing with luxon
+        const formattedDateTime = dt.fromFormat(dateTime, 'yyyy-MM-dd HH:mm:ss').toISO();
+
+        // parse dateTime with luxon
+        const parsedDateTime = dt.fromISO(formattedDateTime);
+
+        //format dateTime to desired string
+        const formattedStr = parsedDateTime.toLocaleString(dt.DATETIME_MED);
+
+        dateDiv.innerText = formattedStr;
+    });
+
+    /*
+    * CSRF
+    */
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    /*
+    * Toggle button ajax script
+    */
+    const toggleAdmin = async () => {
+
+        const user_id = event.target.id.split('-')[1];
+        const checkbox = document.getElementById(event.target.id);
+
+        try {
+            const response = await fetch(`/role/toggle/${user_id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+
+            });
+
+            const data = await response.json();
+
+        } catch (error) {
+            //toggle state of checkbox if operation fails
+            setTimeout(() => {
+                checkbox.checked = !checkbox.checked;
+            }, 500);
+        }
+    }
+
+</script>
 
