@@ -1,9 +1,10 @@
 <x-layout>
     <x-topbar/>
+    <hr>
     <div class="md:flex h-full md:h-[calc(100vh-3rem)] bg-gray-100 mt-12">
         <x-sidemenu/>
-        <div class="flex-1 overflow-y-auto h-[calc(100vh-3rem)]">
-            <main class="p-2 lg:p-6 h-[calc(100vh-4rem)]">
+        <div class="flex-1 overflow-y-auto  h-full md:h-[calc(100vh-3rem)]">
+            <main class="p-2 lg:p-6 min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-8rem)]">
                 <section class="max-w-7xl mx-auto py-4 px-5">
                     <div class="flex justify-between items-center border-b border-gray-300">
                         <h1 class="text-2xl font-semibold pt-2 pb-2">Dashboard</h1>
