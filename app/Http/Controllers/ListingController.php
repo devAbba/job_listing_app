@@ -17,7 +17,7 @@ class ListingController extends Controller
         $page_size = $request->query('page_size') ?? 6;
         return view('listings.index', [
             'heading' => 'Latest Listings',
-            'listings' => Listing::latest()->filter(request(['tag']))->paginate($page_size)
+            'listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate($page_size)
         ]);
     }
 
@@ -26,6 +26,9 @@ class ListingController extends Controller
      */
     public function show(Listing $listing): View
     {
+        $listing->views++;
+        $listing->save();
+
         return view('listings.show', [
             'listing' => $listing
         ]);
@@ -101,23 +104,23 @@ class ListingController extends Controller
 
         $listing->update($form_fields);
 
-        return back()->with('success', "Job listing updated successfully!");
+        return redirect('/')->with('success', "Job listing updated successfully!");
     }
 
     // delete listing
     public function destroy(Listing $listing)
     {
-        $this->authorize('delete', $listing);
+        $this->authorize('destroy', $listing);
 
         $listing->delete();
 
-        return redirect('/')->with('success', "Listing deleted successfully");
+        return back()->with('success', "Listing deleted successfully");
     }
 
     // manage listing
     public function manage()
     {
-        return view('listings.manage', [
+        return view('users.dashboard', [
             'listings' => auth()->user()->listings()->get()
         ]);
     }
